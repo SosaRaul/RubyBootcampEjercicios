@@ -1,11 +1,21 @@
 require 'csv'
 class Agenda
 
+  def initialize()
+    begin
+      CSV.read('agenda.csv',headers:true)
+    rescue Errno::ENOENT
+        CSV.open('agenda.csv','w') do |csvNuevo|
+          csvNuevo.add_row(['nombre','fechaNac','email','telefono','direccion'])
+        end
+    end
+  end
+
   def mostrarContactos()
     contactos = CSV.read("agenda.csv",headers:true)
     contactos.each do |contacto|
-      puts "\nNombre : #{contacto["nombre"]} \nFecha Nacimiento : #{contacto["fechaNac"]}"
-      puts "Email : #{contacto["email"]} \nTelefono : #{contacto["telefono"]} \nDireccion : #{contacto["direccion"]}"
+      puts "\nNombre : #{contacto['nombre']} \nFecha Nacimiento : #{contacto['fechaNac']}"
+      puts "Email : #{contacto['email']} \nTelefono : #{contacto['telefono']} \nDireccion : #{contacto['direccion']}"
     end
   end
 
@@ -28,17 +38,17 @@ class Agenda
     else
       puts "CONTACTO NO ENCONTRADO"
     end
-    
+
   end
 
   def buscarContacto(nombre)
     contactos =  CSV.read('agenda.csv',headers: true)
-    contactoBuscado = contactos.find{ |fila| fila["nombre"].downcase == nombre.downcase}
+    contactoBuscado = contactos.find{ |fila| fila['nombre'].downcase == nombre.downcase}
   end
 
   def mostrarContacto(contacto)
-    puts "\nNombre : #{contacto["nombre"]} \nFecha Nacimiento : #{contacto["fechaNac"]}"
-    puts "Email : #{contacto["email"]} \nTelefono : #{contacto["telefono"]} \nDireccion : #{contacto["direccion"]}"
+    puts "\nNombre : #{contacto['nombre']} \nFecha Nacimiento : #{contacto['fechaNac']}"
+    puts "Email : #{contacto['email']} \nTelefono : #{contacto['telefono']} \nDireccion : #{contacto['direccion']}"
   end
 
   private
@@ -60,11 +70,11 @@ class Agenda
     when 1
       puts "Ingrese nuevo nombre "
       nombre = gets.chomp
-      contactoBuscado["nombre"] = nombre
+      contactoBuscado['nombre'] = nombre
     when 2
       puts "Ingrese nueva fecha de nacimiento "
       fechaNac = gets.chomp
-      contactoBuscado["fechaNac"] = fechaNac
+      contactoBuscado['fechaNac'] = fechaNac
     when 3
       puts "Ingrese nuevo email "
       email = gets.chomp
@@ -72,11 +82,11 @@ class Agenda
     when 4
       puts "Ingrese nuevo teléfono "
       telefono = gets.chomp
-      contactoBuscado["telefono"] = telefono
+      contactoBuscado['telefono'] = telefono
     when 5
       puts "Ingrese nueva direccion "
       direccion = gets.chomp
-      contactoBuscado["direccion"] = direccion
+      contactoBuscado['direccion'] = direccion
     when 6
       puts "bye!"
     end
