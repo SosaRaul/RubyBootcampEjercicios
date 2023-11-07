@@ -13,9 +13,13 @@ class Agenda
 
   def mostrarContactos()
     contactos = CSV.read("agenda.csv",headers:true)
-    contactos.each do |contacto|
-      puts "\nNombre : #{contacto['nombre']} \nFecha Nacimiento : #{contacto['fechaNac']}"
-      puts "Email : #{contacto['email']} \nTelefono : #{contacto['telefono']} \nDireccion : #{contacto['direccion']}"
+    if(contactos.size != 0)
+      contactos.each do |contacto|
+        puts "\nNombre : #{contacto['nombre']} \nFecha Nacimiento : #{contacto['fechaNac']}"
+        puts "Email : #{contacto['email']} \nTelefono : #{contacto['telefono']} \nDireccion : #{contacto['direccion']}"
+      end
+    else
+      puts "AGENDA VACIA"
     end
   end
 
